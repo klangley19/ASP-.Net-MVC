@@ -1,0 +1,130 @@
+﻿
+<style type="text/css">
+    #details-container {
+        padding: 10px;
+    }
+
+        #details-container h2 {
+            margin: 0;
+        }
+
+        #details-container em {
+            color: #8c8c8c;
+        }
+
+        #details-container dt {
+            margin: 0;
+            display: inline;
+        }
+</style>
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <h4> #= SalesOrderNumber # </h4>
+        <h4> #= AccountNumber # </h4>
+        <h4>#= PurchaseOrderNumber #</h4>
+        <dl class="dl-horizontal">
+            <dt>Customer Title: </dt>
+            <dd>#= CustomerTitle #</dd>
+            <dt>Customer First Name: </dt>
+            <dd>#= CustomerFirstName #</dd>
+            <dt>Customer Middle Name: </dt>
+            <dd>#= CustomerMiddleName #</dd>
+            <dt>Customer Last Name: </dt>
+            <dd>#= CustomerLastName #</dd>
+            <dt>Customer Suffix: </dt>
+            <dd>#= CustomerSuffix #</dd>
+
+
+            <dt>Order Date: </dt>
+            <dd>#= OrderDate #</dd>
+            <dt>Due Date: </dt>
+            <dd>#= DueDate #</dd>
+            <dt>Ship Date: </dt>
+            <dd>#= ShipDate #</dd>
+            <dt>Status: </dt>
+            <dd>#= Status #</dd>
+
+
+            <dt>Sub Total Amount: </dt>
+            <dd>#= SubTotalString #</dd>
+            <dt>Tax Amount: </dt>
+            <dd>#= TaxAmtString #</dd>
+            <dt>Freight Amount: </dt>
+            <dd>#= FreightString #</dd>
+            <dt>Total Due Amount: </dt>
+            <dd>#= TotalDueString #</dd>
+
+
+
+        </dl>
+    </div>
+</script>
+
+
+
+<script type="text/javascript">
+    var detailsTemplate = kendo.template($("#template").html());
+
+    function showDetails(e) {
+        console.log("The showDetails() method is starting ... ");
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#Details").data("kendoWindow");
+
+
+        $.each(dataItem, function (key, value) {
+            console.log(key, value);
+        });
+
+
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+    }
+
+</script>
+
+@(Html.Kendo().Window().Name("Details")
+            .Title("Customer Details")
+            .Visible(false)
+            .Modal(true)
+            .Draggable(true)
+            .Width(360)
+)
+
+<div class="demo-section">
+    <div id="gridWrapp" class="k-content">
+
+
+
+    </div>
+</div>
+
+<div class="demo-section">
+    <div id="gridWrapp" class="k-content">
+
+        @(Html.Kendo().Grid<_01.Models.SalesOrderViewModel>()
+            .Name("Grid")
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Read(read => read.Action("GetOrdersForSalesPerson", "Sales"))
+                .PageSize(20)
+                .ServerOperation(false))
+            .Columns(columns =>
+            {
+                columns.Bound(order => order.SalesOrderNumber);
+                columns.Bound(order => order.AccountNumber);
+                columns.Bound(order => order.PurchaseOrderNumber);
+                columns.Command(command => command.Custom("Order Details").Click("showDetails")).Width(240);
+            })
+            .Pageable(pageable => pageable
+                .Refresh(true)
+                .PageSizes(true)
+                .ButtonCount(5))
+
+        )
+
+    </div>
+</div>
+

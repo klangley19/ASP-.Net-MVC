@@ -1,0 +1,27 @@
+﻿@model _01.Models.ProductCategoryViewModel
+
+@{
+    ViewBag.Title = "Product Look-Up";
+}
+
+
+
+<h2>Product Look-Up</h2>
+<h4>Select Product Category :</h4>
+
+@using (Html.BeginForm("LoadProducts", "Products"))
+{
+    @Html.DropDownListFor( 
+        pc => pc.CategoryID,
+        new SelectList(ViewData["ProductCategories"] as List<_01.Models.ProductCategoryViewModel>, "CategoryID", "Name"))
+    
+    <input type="submit" value="Submit" />
+}
+
+
+
+
+
+
+
+

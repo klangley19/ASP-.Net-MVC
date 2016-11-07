@@ -1,0 +1,80 @@
+﻿
+@model IEnumerable<_01.Models.SalesPersonViewModel>
+
+@{
+    ViewBag.Title = "Sales People";
+}
+
+@{
+    ViewBag.Title = "";
+}
+
+<h2>Sales People</h2>
+
+<table class="table">
+    <tr>
+        <th class="clickable-column-header">
+            @Html.ActionLink(Html.DisplayNameFor(model => model.Title).ToString(), "Index", new { sort_order = _01.Controllers.SalesController.SalesPersonSortOrder.Title })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.FirstName).ToString(), "Index", new { sort_order = _01.Controllers.SalesController.SalesPersonSortOrder.FirstName })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.MiddleName).ToString(), "Index", new { sort_order = _01.Controllers.SalesController.SalesPersonSortOrder.MiddleName })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.LastName).ToString(), "Index", new { sort_order = _01.Controllers.SalesController.SalesPersonSortOrder.LastName })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.Suffix).ToString(), "Index", new { sort_order = _01.Controllers.SalesController.SalesPersonSortOrder.Suffix })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.SalesQuotaString).ToString(), "Index", new { sort_order = _01.Controllers.SalesController.SalesPersonSortOrder.SalesQuota })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.SalesYTDString).ToString(), "Index", new { sort_order = _01.Controllers.SalesController.SalesPersonSortOrder.SalesYTD })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.SalesLastYearString).ToString(), "Index", new { sort_order = _01.Controllers.SalesController.SalesPersonSortOrder.SalesLastYear })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Suffix)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesQuotaString)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesYTDString)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesLastYearString)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.BusinessEntityID }) |
+                @Html.ActionLink("Sale Orders", "Orders", new { id = item.BusinessEntityID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

@@ -1,0 +1,64 @@
+﻿@model _01.Models.ProductCategoryViewModel
+
+@{
+    ViewBag.Title = "Product Look-Up";
+}
+
+
+
+<h2>Product Look-Up</h2>
+<h4>Select Product Category :</h4>
+
+<p>
+    <label for="product_categories">Product Category :</label>
+            @(Html.Kendo().ComboBox()
+                .Name("product_categories")
+                .HtmlAttributes(new { style = "width: 450px" })
+                .Placeholder("Select Product Category ...")
+                .DataSource(source =>
+                {
+                    source.Read(read =>
+                    {
+                        read.Action("LoadProductCategories", "Products");
+                    });
+                })
+                .DataTextField("Name")
+                .DataValueField("CategoryID")
+                .Events(e =>
+                {
+                    e.Change("onChange");
+                })
+    )
+</p>
+
+<script>
+
+    function onChange(e) {
+
+        var CategoryID = this.dataItem(this.select()).CategoryID;
+
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ShowProducts", "Products")',
+            data: { ProductCategoryID: CategoryID },
+            success: function () {
+                window.location.href = '@Url.Action("OpenProducts", "Products")';
+            }
+        });
+    }
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+

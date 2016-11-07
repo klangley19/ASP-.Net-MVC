@@ -1,0 +1,129 @@
+﻿
+<style type="text/css">
+    #details-container {
+        padding: 10px;
+    }
+
+        #details-container h2 {
+            margin: 0;
+        }
+
+        #details-container em {
+            color: #8c8c8c;
+        }
+
+        #details-container dt {
+            margin: 0;
+            display: inline;
+        }
+</style>
+
+
+
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <h2>#= FirstName # #= MiddleName # #= LastName #</h2>
+        <dl class="dl-horizontal">
+            <dt>Phone Number: </dt> 
+            <dd>#= PhoneNumber #</dd>
+            <dt>Phone Number Type: </dt>
+            <dd>#= PhoneNumberType #</dd>
+            <dt>E-Mail Address: </dt>
+            <dd>#= EmailAddress #</dd>
+            <dt>E-Mail Promotion: </dt>
+            <dd>#= EmailPromotion #</dd>
+            <dt>Address Line One: </dt>
+            <dd>#= AddressLine1 #</dd>
+            <dt>Address Line Two: </dt>
+            <dd>#= AddressLine2 #</dd>
+            <dt>City: </dt>
+            <dd>#= City #</dd>
+            <dt>State Or Province: </dt>
+            <dd>#= StateProvinceName #</dd>
+            <dt>Postal Code: </dt>
+            <dd>#= PostalCode #</dd>
+            <dt>Country Or Region: </dt>
+            <dd>#= CountryRegionName #</dd>
+        </dl>
+    </div>
+</script>
+
+
+<script type="text/javascript">
+    var detailsTemplate = kendo.template($("#template").html());
+
+    function showDetails(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#Details").data("kendoWindow");
+
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+    }
+</script>
+
+<script type="text/javascript">
+
+    function showOrders(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        window.location.href = '@Url.Action("Orders", "Sales")/' + dataItem.BusinessEntityID;
+
+    }
+
+
+</script>
+
+
+
+
+
+<div class="demo-section">
+    <div id="gridWrapp" class="k-content">
+
+        @(Html.Kendo().Grid<_01.Models.SalesPersonViewModel>()
+        .Name("Grid")
+        .Columns(columns =>
+        {
+            columns.Bound(person => person.FirstName);
+            columns.Bound(person => person.MiddleName);
+            columns.Bound(person => person.LastName);
+            columns.Bound(person => person.SalesQuota).Format("{0:c2}");
+            columns.Bound(person => person.SalesYTD).Format("{0:c2}");
+            columns.Bound(person => person.SalesLastYear).Format("{0:c2}");
+            columns.Command(command => command.Custom("View Details").Click("showDetails")).Width(240);
+            columns.Command(command => command.Custom("View Orders").Click("showOrders")).Width(240);
+
+        })
+        .DataSource(dataSource => dataSource
+              .Ajax()
+              .Read(read => read.Action("GetSalesPersons", "Sales"))
+              .PageSize(20)
+              .ServerOperation(false)
+            )
+            .Pageable()
+            .Sortable()
+            .Filterable()
+        )
+
+        @(Html.Kendo().Window().Name("Details")
+            .Title("Customer Details")
+            .Visible(false)
+            .Modal(true)
+            .Draggable(true)
+            .Width(360)
+        )
+
+
+
+    </div>
+</div>
+
+
+
+
+
+

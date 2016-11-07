@@ -1,0 +1,55 @@
+﻿
+@model _01.Models.SalesOrderViewModel
+
+@{
+    ViewBag.Title = "Billing To Address Information Details";
+}
+
+<h2>Billing To Address Information Details</h2>
+
+<div >
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BillToAddressLine1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BillToAddressLine1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BillToAddressLine2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BillToAddressLine2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BillToCity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BillToCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BillToStateProvince)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BillToStateProvince)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BillToPostalCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BillToPostalCode)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to Order List", "Orders", new { id = Model.SalesPersonID })
+</p>
+

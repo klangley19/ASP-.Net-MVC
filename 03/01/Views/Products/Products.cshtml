@@ -1,0 +1,32 @@
+﻿
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<div class="demo-section">
+    <div id="gridWrapp" class="k-content">
+
+        @(Html.Kendo().Grid<_01.Models.ProductViewModel>()
+            .Name("Grid")
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Read(read => read.Action("GetProducts", "Products"))
+                .PageSize(20)
+                .ServerOperation(false))
+            .Columns(columns =>
+            {
+                columns.Bound(product => product.Name);
+                columns.Bound(product => product.Number);
+            })
+            .Pageable(pageable => pageable
+                .Refresh(true)
+                .PageSizes(true)
+                .ButtonCount(5))
+
+        )
+    </div>
+</div>
+
+
+

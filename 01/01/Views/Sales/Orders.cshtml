@@ -1,0 +1,64 @@
+﻿@model IEnumerable<_01.Models.SalesOrderViewModel>
+
+@{
+    ViewBag.Title = "Sales Orders";
+}
+
+<h2>Orders</h2>
+
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.SalesOrderNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PurchaseOrderNumber)
+        </th>
+
+
+
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.SalesOrderNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchaseOrderNumber)
+        </td>
+
+
+
+
+        <td>
+            @Html.ActionLink("Details", "OrderDetails", item) |
+            @Html.ActionLink("Bill To", "AddressBillTo", item) |
+            @Html.ActionLink("Ship To", "AddressShipTo", item) 
+        </td>
+
+    </tr>
+}
+
+</table>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+    
+</p>
+
+
+
+
